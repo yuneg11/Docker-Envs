@@ -6,6 +6,6 @@ OSNAME=ubuntu18.04
 
 TAG="$CUDA-cudnn$CUDNN-$TYPE"
 
-docker build -t "ghcr.io/yuneg11/basic-env:$TAG-$VER" \
+docker build -t "ghcr.io/yuneg11/vessl-env:$VER" \
              --build-arg "BASE_TAG=$TAG-$OSNAME" \
              .

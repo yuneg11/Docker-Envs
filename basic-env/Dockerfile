@@ -37,8 +37,7 @@ RUN chsh -s /bin/zsh \
 
 # GIT
 COPY git/.gitignore $USERHOME/
-
 RUN git config --global core.excludesfile ~/.gitignore
 
 # Postprocess
-ENTRYPOINT service ssh restart && zsh
+# ENTRYPOINT service ssh restart && zsh
