@@ -28,7 +28,7 @@ EXPOSE 22
 
 # User
 RUN mkdir /home/vessl \
-    && useradd -m vessl -s /bin/bash \
+    && useradd -d /home/vessl -s /bin/bash vessl \
     && chown -R vessl:vessl /home/vessl
 
 ARG PASSWD
