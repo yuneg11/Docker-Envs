@@ -1,4 +1,12 @@
-VER=$1
+#!/bin/bash
+
+if (( $# != 1 )); then
+    echo "Usage $0 <VER>"
+    exit 0
+else
+    VER=$1
+fi
+
 CUDA=10.2
 CUDNN=7
 TYPE=devel
