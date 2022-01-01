@@ -5,7 +5,7 @@ MAINTAINER EungGu Yun <yuneg11@gmail.com>
 # APT
 RUN sed -i "s/archive.ubuntu.com/mirror.kakao.com/" /etc/apt/sources.list \
     && apt update \
-    && apt install -y --no-install-recommends software-properties-common \
+    && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends software-properties-common \
     && add-apt-repository ppa:deadsnakes/ppa -y \
     && DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
     && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \

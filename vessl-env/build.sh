@@ -8,10 +8,10 @@ else
     PASSWD=$2
 fi
 
-CUDA=10.2
-CUDNN=7
+CUDA=11.4.2
+CUDNN=8
 TYPE=devel
-OSNAME=ubuntu18.04
+OSNAME=ubuntu20.04
 
 TAG="$CUDA-cudnn$CUDNN-$TYPE"
 
