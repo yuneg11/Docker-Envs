@@ -1,12 +1,17 @@
 #!/bin/bash
 
-if (( $# != 2 )); then
-    echo "Usage $0 <VER> <PASSWD>"
+if (( $# == 0 )); then
+    echo "Usage $0 <PASSWD> [<VER>]"
     exit 0
+elif (( $# == 1 )); then
+    PASSWD=$1
+    VER="dev-$(date +%y%m%d%H%M)"
 else
-    VER=$1
-    PASSWD=$2
+    PASSWD=$1
+    VER=$2
 fi
+
+echo "Building vessl-env:$VER ..."
 
 CUDA=11.4.2
 CUDNN=8

@@ -9,7 +9,7 @@ RUN sed -i "s/archive.ubuntu.com/mirror.kakao.com/" /etc/apt/sources.list \
     && add-apt-repository ppa:deadsnakes/ppa -y \
     && DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
     && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
-        sudo tmux ssh git vim htop zsh curl wget iputils-ping language-pack-en language-pack-ko ntp \
+        sudo tmux ssh git vim htop zsh curl wget rsync iputils-ping language-pack-en language-pack-ko ntp \
         python3.9 python3.9-distutils \
     && ln -fs /usr/share/zoneinfo/Asia/Seoul /etc/localtime \
     && apt clean \
@@ -27,11 +27,13 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
 EXPOSE 22
 
 # User
-RUN mkdir /home/vessl \
-    && useradd -d /home/vessl -s /bin/bash vessl \
-    && chown -R vessl:vessl /home/vessl
+RUN useradd -d /home/dummy -s /bin/bash dummy
 
 ARG PASSWD
-RUN useradd -d /mnt/gsai/siml -s /bin/zsh siml \
-    && echo "siml:$PASSWD" | chpasswd \
-    && usermod -aG sudo siml
+RUN mkdir -p /siml \
+    && useradd -d /siml/vessl -G root -s /bin/zsh -m vessl \
+    && echo "vessl ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && echo "vessl:$PASSWD" | chpasswd
+
+# VESSL internally executes init scripts which requires root privilege.
+# USER vessl
