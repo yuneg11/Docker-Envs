@@ -37,6 +37,7 @@ RUN mkdir -p /siml \
     && echo "vessl:$PASSWD" | chpasswd
 
 ENV PATH /siml/vessl/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+RUN echo "PATH=/siml/vessl/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin" > /etc/environment
 
 # VESSL internally executes init scripts which requires root privilege.
 # USER vessl
