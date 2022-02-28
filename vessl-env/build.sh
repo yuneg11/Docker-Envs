@@ -13,7 +13,7 @@ fi
 
 echo "Building vessl-env:$VER ..."
 
-CUDA=11.5.1
+CUDA=11.4.2
 CUDNN=8
 TYPE=devel
 OSNAME=ubuntu20.04
