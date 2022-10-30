@@ -13,10 +13,10 @@ fi
 
 echo "Building vessl-env:$VER ..."
 
-CUDA=11.4.2
+CUDA=11.7.1
 CUDNN=8
 TYPE=devel
-OSNAME=ubuntu20.04
+OSNAME=ubuntu22.04
 
 TAG="$CUDA-cudnn$CUDNN-$TYPE"
 

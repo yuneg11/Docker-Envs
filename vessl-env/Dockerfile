@@ -11,20 +11,17 @@ RUN sed -i "s/archive.ubuntu.com/mirror.kakao.com/" /etc/apt/sources.list \
     && apt upgrade -y --no-install-recommends \
     && apt install -y --no-install-recommends \
         sudo tmux ssh git vim htop zsh curl wget rsync less iputils-ping ntp \
-        python3.9 python3.9-distutils language-pack-en language-pack-ko \
-        tree fd-find fasd fzf ranger ncdu tig bat neofetch \
-    && curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-    && apt update \
-    && apt install -y --no-install-recommends gh \
+        python3.10 python3.10-dev python3.10-distutils language-pack-en language-pack-ko \
+        tree fd-find fasd fzf ranger ncdu tig bat neofetch exa duf \
     && ln -fs /usr/share/zoneinfo/Asia/Seoul /etc/localtime \
+    && ln -fs /usr/bin/fdfind /usr/bin/fd \
     && update-alternatives --install /usr/bin/bat bat /usr/bin/batcat 1 \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Python
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
-    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1 \
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python3 get-pip.py \
     && rm -rf get-pip.py \
