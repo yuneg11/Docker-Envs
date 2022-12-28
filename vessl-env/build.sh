@@ -13,14 +13,20 @@ fi
 
 echo "Building vessl-env:$VER ..."
 
-CUDA=11.7.1
-CUDNN=8
-TYPE=devel
-OSNAME=ubuntu22.04
+# Base image
+CUDA="11.7.1"
+CUDNN="8"
+TYPE="devel"
+OSNAME="ubuntu22.04"
 
-TAG="$CUDA-cudnn$CUDNN-$TYPE"
+BASE_TAG="$CUDA-cudnn$CUDNN-$TYPE-$OSNAME"
 
+# Build arguments
+CONDA_DIR="/usr/local/anaconda3"
+
+# Build
 docker build -t "ghcr.io/yuneg11/vessl-env:$VER" \
-             --build-arg "BASE_TAG=$TAG-$OSNAME" \
+             --build-arg "BASE_TAG=$BASE_TAG" \
              --build-arg "PASSWD=$PASSWD" \
+             --build-arg "CONDA_DIR=$CONDA_DIR" \
              .

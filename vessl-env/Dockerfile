@@ -19,25 +19,31 @@ RUN sed -i "s/archive.ubuntu.com/mirror.kakao.com/" /etc/apt/sources.list \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Python
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 \
-    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 \
-    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python3 get-pip.py \
-    && rm -rf get-pip.py \
-    && pip install jupyterlab
+# Conda
+ARG CONDA_DIR
+RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/conda.sh \
+    && bash /tmp/conda.sh -b -p $CONDA_DIR \
+    && rm -f /tmp/conda.sh \
+    && update-alternatives --install /usr/local/bin/conda   conda   $CONDA_DIR/bin/conda   1 \
+    && update-alternatives --install /usr/local/bin/python  python  $CONDA_DIR/bin/python  1 \
+    && update-alternatives --install /usr/local/bin/python3 python3 $CONDA_DIR/bin/python3 1 \
+    && update-alternatives --install /usr/local/bin/pip     pip     $CONDA_DIR/bin/pip     1 \
+    && update-alternatives --install /usr/local/bin/pip3    pip3    $CONDA_DIR/bin/pip3    1
+
+# JupiterLab (to use in VESSL)
+RUN pip install jupyterlab \
+    && update-alternatives --install /usr/local/bin/jupyter jupyter $CONDA_DIR/bin/jupyter 1
 
 # SSH
 EXPOSE 22
 
 # User
-RUN useradd -d /home/dummy -s /bin/bash dummy
-
 ARG PASSWD
 RUN mkdir -p /siml \
-    && useradd -d /siml/vessl -G root -s /bin/zsh -m vessl \
+    && useradd -d /siml/vessl -G root -s /bin/zsh -u 1001 -m vessl \
     && echo "vessl ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && echo "vessl:$PASSWD" | chpasswd
+# (1001 is the UID of `siml` in SIML cluster)
 
 ENV PATH=/siml/vessl/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 RUN echo "PATH=$PATH" > /etc/environment

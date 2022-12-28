@@ -7,13 +7,13 @@
 - Development build:
   ```bash
   cd vessl-env
-  ./build <PASSWD>  # TAG will be automatically set as `dev-yymmddHHMM`
+  ./build.sh <PASSWD>  # TAG will be automatically set as `dev-yymmddHHMM`
   ```
 
 - Release build:
   ```bash
   cd vessl-env
-  ./build <PASSWD> <TAG>
+  ./build.sh <PASSWD> <TAG>
   ```
 
 ### Test
