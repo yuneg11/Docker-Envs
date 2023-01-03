@@ -38,14 +38,17 @@ RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.s
 EXPOSE 22
 
 # User
+ARG HOME_DIR
 ARG PASSWD
-RUN mkdir -p /siml \
-    && useradd -d /siml/vessl -G root -s /bin/zsh -u 1001 -m vessl \
-    && echo "vessl ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && echo "vessl:$PASSWD" | chpasswd
-# (1001 is the UID of `siml` in SIML cluster)
+RUN mkdir -p $HOME_DIR \
+    && useradd -d $HOME_DIR/siml -G root -s /bin/zsh -u 1001 -m siml \
+    && echo "siml ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && echo "siml:$PASSWD" | chpasswd
+    # (1001 is the UID of `siml` in SIML cluster)
 
-ENV PATH=/siml/vessl/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+RUN echo AuthorizedKeysFile .ssh/authorized_keys /etc/ssh/root/authorized_keys >> /etc/ssh/sshd_config
+
+ENV PATH=$HOME_DIR/siml/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 RUN echo "PATH=$PATH" > /etc/environment
 
 # VESSL internally executes init scripts which requires root privilege.

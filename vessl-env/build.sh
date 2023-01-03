@@ -22,11 +22,13 @@ OSNAME="ubuntu20.04"
 BASE_TAG="$CUDA-cudnn$CUDNN-$TYPE-$OSNAME"
 
 # Build arguments
+HOME_DIR="/mnt/home"
 CONDA_DIR="/usr/local/anaconda3"
 
 # Build
 docker build -t "ghcr.io/yuneg11/vessl-env:$VER" \
              --build-arg "BASE_TAG=$BASE_TAG" \
              --build-arg "PASSWD=$PASSWD" \
+             --build-arg "HOME_DIR=$HOME_DIR" \
              --build-arg "CONDA_DIR=$CONDA_DIR" \
              .

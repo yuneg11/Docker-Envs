@@ -16,6 +16,11 @@
   ./build.sh <PASSWD> <TAG>
   ```
 
+- Tag existing image:
+  ```bash
+  docker tag <IMAGE_ID> ghcr.io/<USER>/<REPO>:<TAG>
+  ```
+
 ### Test
 
 - Run container
